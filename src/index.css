@@ -1,0 +1,102 @@
+:root {
+  --color-bg: #F9F8F6;
+  --color-text: #2C2C29;
+  --color-text-muted: #555555;
+  --color-accent: #B59A72;
+  --color-accent-hover: #9c825a;
+  --color-olive: #4E594D;
+  --color-olive-text: #4E594D;
+  --color-light: #E8E5DF;
+  --color-white: #ffffff;
+  --color-surface: #ffffff;
+  --color-nav-bg: rgba(249, 248, 246, 0.95);
+  --color-border: rgba(0,0,0,0.05);
+  --color-input-border: rgba(0,0,0,0.2);
+  --color-placeholder: rgba(0,0,0,0.4);
+  --color-footer-bg: #2C2C29;
+  --color-footer-text: #E8E5DF;
+  
+  --font-serif: 'Playfair Display', serif;
+  --font-sans: 'Outfit', sans-serif;
+  
+  --spacing-sm: 1rem;
+  --spacing-md: 2rem;
+  --spacing-lg: 4rem;
+  --spacing-xl: 8rem;
+  
+  --border-radius: 0px;
+}
+
+[data-theme='dark'] {
+  --color-bg: #1A1A19;
+  --color-text: #E8E5DF;
+  --color-text-muted: #A09E98;
+  --color-accent: #CBAE81;
+  --color-accent-hover: #E3C8A0;
+  --color-olive: #2B332A;
+  --color-olive-text: #8FA18D;
+  --color-light: #222221;
+  --color-white: #ffffff;
+  --color-surface: #1E1E1C;
+  --color-nav-bg: rgba(26, 26, 25, 0.95);
+  --color-border: rgba(255,255,255,0.05);
+  --color-input-border: rgba(255,255,255,0.3);
+  --color-placeholder: rgba(255,255,255,0.5);
+  --color-footer-bg: #111110;
+  --color-footer-text: #E8E5DF;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.6;
+  font-weight: 300;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  background: none;
+  border: none;
+  font-family: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 5%;
+}
+
+.text-serif { font-family: var(--font-serif); }
+.text-sans { font-family: var(--font-sans); }
+.text-accent { color: var(--color-accent); }
