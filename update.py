@@ -12,7 +12,7 @@ nav_replace = """    <>
       <header className={`header-wrapper ${scrolled ? 'scrolled' : ''}`}>
         <div className="top-bar text-sans">
           <div className="container" style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '1px' }}>
-            <span>📍 No.80/1 Ampitiya Road, Tennakumbura, Kandy, Sri Lanka</span>
+            <span>📍 No.80/1 Ampitiya Road, Tennakumbura, Godamunne, Kandy, Sri Lanka</span>
             <span className="hide-mobile">reservations@godamunnevilla.com</span>
           </div>
         </div>
@@ -38,7 +38,7 @@ map_section = """      </section>
             style={{ marginBottom: '3rem', textAlign: 'center' }}
           >
             <h2 className="text-serif" style={{ fontSize: '3.5rem', marginBottom: '1rem' }}>Location</h2>
-            <p className="text-sans" style={{ color: 'var(--color-text-muted)', fontSize: '1.2rem' }}>No.80/1 Ampitiya Road, Tennakumbura, Kandy, Sri Lanka</p>
+            <p className="text-sans" style={{ color: 'var(--color-text-muted)', fontSize: '1.2rem' }}>No.80/1 Ampitiya Road, Tennakumbura, Godamunne, Kandy, Sri Lanka</p>
           </motion.div>
           <motion.div
             initial={{ opacity: 0, scale: 0.98 }}

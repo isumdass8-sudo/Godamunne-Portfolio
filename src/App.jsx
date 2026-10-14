@@ -15,6 +15,32 @@ import disImg from './assets/Dis.png';
 import bgImage from './assets/BG.png';
 import './App.css';
 
+const FacebookIcon = ({ size = 18, className = "" }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
+    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+  </svg>
+);
+
+const InstagramIcon = ({ size = 18, className = "" }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
+    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+  </svg>
+);
+
+const WhatsAppIcon = ({ size = 18, className = "" }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
+    <path d="M17.472 14.382c-.301-.15-1.78-.878-2.056-.978-.276-.101-.477-.15-.678.15-.2.301-.778.978-.954 1.179-.176.2-.351.226-.652.075-.301-.15-1.272-.469-2.423-1.496-.896-.799-1.501-1.786-1.677-2.087-.176-.301-.019-.464.132-.614.136-.135.301-.351.452-.527.15-.176.2-.301.301-.502.101-.2.05-.376-.025-.527-.075-.15-.678-1.631-.93-2.235-.244-.589-.493-.509-.678-.519-.176-.01-.376-.01-.577-.01-.201 0-.527.075-.803.376s-1.054 1.029-1.054 2.511 1.079 2.913 1.23 3.114c.15.201 2.122 3.24 5.141 4.544.718.31 1.279.496 1.716.635.722.23 1.379.197 1.9.119.58-.088 1.78-.727 2.03-1.43.25-.704.25-1.307.175-1.43-.075-.124-.276-.2-.577-.35zm-5.467 7.618a10.916 10.916 0 0 1-5.58-1.528l-.4-.237-4.148 1.088 1.107-4.045-.26-.414A10.92 10.92 0 0 1 1.005 11C1.005 5.039 5.856.188 11.82.188c2.89 0 5.606 1.127 7.65 3.171a10.82 10.82 0 0 1 3.172 7.646c0 5.964-4.852 10.816-10.637 10.816v-.005z"/>
+  </svg>
+);
+
+const SOCIAL_LINKS = {
+  facebook: "https://facebook.com",
+  instagram: "https://instagram.com",
+  whatsapp: "https://wa.me/94777841760?text=Hello%20Godamunne%20Villa%20Kandy,%20I%20would%20like%20to%20inquire%20about%20a%20reservation."
+};
+
 function App() {
   const [scrolled, setScrolled] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -128,9 +154,26 @@ function App() {
     <>
       <header className={`header-wrapper ${scrolled ? 'scrolled' : ''}`}>
         <div className="top-bar text-sans">
-          <div className="container" style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '1px' }}>
-            <span>📍 No.80/1 Ampitiya Road, Tennakumbura, Kandy, Sri Lanka</span>
-            <span className="hide-mobile">reservations@godamunnevilla.com &nbsp;&nbsp;|&nbsp;&nbsp; +94 77 784 1760</span>
+          <div className="container top-bar-container">
+            <span className="top-bar-address">📍 No.80/1 Ampitiya Road, Tennakumbura, Godamunne, Kandy, Sri Lanka</span>
+            <div className="top-bar-right">
+              <span className="hide-mobile top-bar-contacts">
+                <a href="mailto:reservations@godamunnevilla.com">reservations@godamunnevilla.com</a>
+                <span className="top-bar-divider">|</span>
+                <a href="tel:+94777841760">+94 77 784 1760</a>
+              </span>
+              <div className="top-bar-socials">
+                <a href={SOCIAL_LINKS.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook" title="Follow on Facebook" className="top-bar-social-link">
+                  <FacebookIcon size={13} />
+                </a>
+                <a href={SOCIAL_LINKS.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Follow on Instagram" className="top-bar-social-link">
+                  <InstagramIcon size={13} />
+                </a>
+                <a href={SOCIAL_LINKS.whatsapp} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" title="Contact on WhatsApp" className="top-bar-social-link top-bar-wa">
+                  <WhatsAppIcon size={13} />
+                </a>
+              </div>
+            </div>
           </div>
         </div>
         <nav className="navbar">
@@ -411,7 +454,7 @@ function App() {
             style={{ marginBottom: '3rem', textAlign: 'center' }}
           >
             <h2 className="text-serif" style={{ fontSize: '3.5rem', marginBottom: '1rem' }}>Location</h2>
-            <p className="text-sans" style={{ color: 'var(--color-text-muted)', fontSize: '1.2rem' }}>No.80/1 Ampitiya Road, Tennakumbura, Kandy, Sri Lanka</p>
+            <p className="text-sans" style={{ color: 'var(--color-text-muted)', fontSize: '1.2rem' }}>No.80/1 Ampitiya Road, Tennakumbura, Godamunne, Kandy, Sri Lanka</p>
           </motion.div>
           <div style={{ width: '100%', height: '450px', overflow: 'hidden' }}>
             <iframe 
@@ -437,6 +480,18 @@ function App() {
           >
             <h2 className="text-serif">Begin your journey.</h2>
             <p>Connect with our concierge to tailor your upcoming stay or inquire about exclusive experiences.</p>
+            <div className="inquiry-direct-chat">
+              <span className="inquiry-direct-label text-sans">Direct Concierge Service</span>
+              <a 
+                href={SOCIAL_LINKS.whatsapp} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="whatsapp-inquiry-btn"
+              >
+                <WhatsAppIcon size={18} />
+                <span>Chat on WhatsApp</span>
+              </a>
+            </div>
           </motion.div>
           <motion.form 
             className="inquiry-form"
@@ -480,6 +535,17 @@ function App() {
               <p className="footer-text">
                 An award-winning boutique destination redefining modern luxury through impeccable design and intuitive service.
               </p>
+              <div className="footer-social-row">
+                <a href={SOCIAL_LINKS.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook" title="Facebook" className="footer-social-btn">
+                  <FacebookIcon size={18} />
+                </a>
+                <a href={SOCIAL_LINKS.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram" className="footer-social-btn">
+                  <InstagramIcon size={18} />
+                </a>
+                <a href={SOCIAL_LINKS.whatsapp} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" title="WhatsApp" className="footer-social-btn footer-wa-btn">
+                  <WhatsAppIcon size={18} />
+                </a>
+              </div>
             </div>
             <div>
               <h4>Explore</h4>
@@ -494,9 +560,14 @@ function App() {
             <div>
               <h4>Contact</h4>
               <ul className="footer-links">
-                <li><a href="#">No.80/1 Ampitiya Road, Kandy</a></li>
-                <li><a href="#">reservations@godamunnevilla.com</a></li>
-                <li><a href="#">+94 77 784 1760</a></li>
+                <li><a href="#location">No.80/1 Ampitiya Road, Tennakumbura, Godamunne, Kandy, Sri Lanka</a></li>
+                <li><a href="mailto:reservations@godamunnevilla.com">reservations@godamunnevilla.com</a></li>
+                <li><a href="tel:+94777841760">+94 77 784 1760</a></li>
+                <li>
+                  <a href={SOCIAL_LINKS.whatsapp} target="_blank" rel="noopener noreferrer" className="footer-wa-link">
+                    <WhatsAppIcon size={16} /> WhatsApp: +94 77 784 1760
+                  </a>
+                </li>
               </ul>
             </div>
           </div>
@@ -635,6 +706,20 @@ function App() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Floating WhatsApp Quick Contact Button */}
+      <a 
+        href={SOCIAL_LINKS.whatsapp} 
+        target="_blank" 
+        rel="noopener noreferrer" 
+        className="floating-whatsapp-btn"
+        aria-label="Chat with Godamunne Villa on WhatsApp"
+      >
+        <span className="floating-whatsapp-tooltip text-sans">Chat on WhatsApp</span>
+        <div className="floating-whatsapp-icon-box">
+          <WhatsAppIcon size={26} />
+        </div>
+      </a>
     </>
   );
 }
