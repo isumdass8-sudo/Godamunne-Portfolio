@@ -44,6 +44,7 @@ const SOCIAL_LINKS = {
 function App() {
   const [scrolled, setScrolled] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedRoom, setSelectedRoom] = useState(null);
   const [showAttractions, setShowAttractions] = useState(false);
@@ -97,9 +98,9 @@ function App() {
     }
   }, [isDarkMode]);
 
-  // Lock body scroll when any modal is open
+  // Lock body scroll when any modal or mobile menu is open
   useEffect(() => {
-    if (selectedRoom || selectedImage || showAttractions) {
+    if (selectedRoom || selectedImage || showAttractions || mobileMenuOpen) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'unset';
@@ -107,7 +108,7 @@ function App() {
     return () => {
       document.body.style.overflow = 'unset';
     };
-  }, [selectedRoom, selectedImage, showAttractions]);
+  }, [selectedRoom, selectedImage, showAttractions, mobileMenuOpen]);
 
   const fadeUp = {
     hidden: { opacity: 0, y: 40 },
@@ -177,32 +178,98 @@ function App() {
           </div>
         </div>
         <nav className="navbar">
-          <div className="nav-logo" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <img src={logoImage} alt="Godamunne Villa Logo" style={{ height: '60px', objectFit: 'contain', borderRadius: '4px' }} />
-            <span>Godamunne Villa Kandy</span>
+          <a href="#" className="nav-logo">
+            <img src={logoImage} alt="Godamunne Villa Logo" className="nav-logo-img" />
+            <span className="nav-logo-text">
+              Godamunne Villa <span className="nav-logo-city">Kandy</span>
+            </span>
+          </a>
+          <ul className="nav-links">
+            <li><a href="#about" className="nav-link">Our Story</a></li>
+            <li><a href="#rooms" className="nav-link">Rooms</a></li>
+            <li><a href="#wellness" className="nav-link">Experience</a></li>
+            <li><a href="#gallery" className="nav-link">Gallery</a></li>
+            <li><a href="#location" className="nav-link">Location</a></li>
+          </ul>
+          <div className="nav-actions">
+            <button 
+              onClick={() => setIsDarkMode(!isDarkMode)} 
+              className="theme-toggle-btn"
+              aria-label="Toggle dark mode"
+              title="Toggle theme"
+            >
+              {isDarkMode ? <Sun size={19} /> : <Moon size={19} />}
+            </button>
+            <button className="book-btn" onClick={() => document.getElementById('inquiry')?.scrollIntoView({ behavior: 'smooth' })}>Reserve</button>
+            <button 
+              className="mobile-menu-btn" 
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={mobileMenuOpen}
+            >
+              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
           </div>
-        <ul className="nav-links">
-          <li><a href="#about" className="nav-link">Our Story</a></li>
-          <li><a href="#rooms" className="nav-link">Rooms</a></li>
-          <li><a href="#wellness" className="nav-link">Experience</a></li>
-          <li><a href="#gallery" className="nav-link">Gallery</a></li>
-          <li><a href="#location" className="nav-link">Location</a></li>
-        </ul>
-        <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
-          <button 
-            onClick={() => setIsDarkMode(!isDarkMode)} 
-            style={{ background: 'none', border: 'none', color: 'inherit', cursor: 'pointer', display: 'flex', alignItems: 'center' }}
-            aria-label="Toggle dark mode"
-          >
-            {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
-          </button>
-          <button className="book-btn" onClick={() => document.getElementById('inquiry')?.scrollIntoView({ behavior: 'smooth' })}>Reserve</button>
-          <button className="mobile-menu" style={{ display: 'none', background: 'none', border: 'none', color: 'inherit', cursor: 'pointer' }}>
-            <Menu />
-          </button>
-        </div>
-      </nav>
+        </nav>
       </header>
+
+      {/* Mobile Navigation Drawer */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div 
+            className="mobile-nav-drawer"
+            initial={{ opacity: 0, y: -15 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -15 }}
+            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <div className="mobile-nav-inner">
+              <div className="mobile-nav-theme-row">
+                <button 
+                  onClick={() => setIsDarkMode(!isDarkMode)} 
+                  className="mobile-theme-btn text-sans"
+                  aria-label="Toggle dark mode"
+                >
+                  {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
+                  <span>{isDarkMode ? "Light Mode" : "Dark Mode"}</span>
+                </button>
+              </div>
+              <ul className="mobile-nav-list text-serif">
+                <li><a href="#about" onClick={() => setMobileMenuOpen(false)}>Our Story</a></li>
+                <li><a href="#rooms" onClick={() => setMobileMenuOpen(false)}>Rooms & Suites</a></li>
+                <li><a href="#wellness" onClick={() => setMobileMenuOpen(false)}>Experience Kandy</a></li>
+                <li><a href="#gallery" onClick={() => setMobileMenuOpen(false)}>Gallery</a></li>
+                <li><a href="#location" onClick={() => setMobileMenuOpen(false)}>Location</a></li>
+              </ul>
+              <div className="mobile-nav-cta">
+                <button 
+                  className="mobile-reserve-btn text-sans"
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    document.getElementById('inquiry')?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                >
+                  Reserve Your Stay
+                </button>
+                <a 
+                  href={SOCIAL_LINKS.whatsapp}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mobile-wa-link text-sans"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <WhatsAppIcon size={18} />
+                  <span>Chat on WhatsApp</span>
+                </a>
+                <div className="mobile-nav-contacts text-sans">
+                  <a href="tel:+94777841760">📞 +94 77 784 1760</a>
+                  <a href="mailto:reservations@godamunnevilla.com">✉️ reservations@godamunnevilla.com</a>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <section className="hero">
         <motion.img 
@@ -237,46 +304,36 @@ function App() {
             viewport={{ once: true, margin: "-100px" }}
             variants={staggerContainer}
           >
-            <motion.h2 variants={fadeUp} className="text-serif text-accent" style={{ fontSize: '3.5rem', marginBottom: '2rem', lineHeight: 1.1 }}>
+            <motion.h2 variants={fadeUp} className="text-serif text-accent section-title">
               A private retreat<br/>in the heart of Kandy.
             </motion.h2>
-            <motion.p variants={fadeUp} style={{ fontSize: '1.25rem', color: 'var(--color-text)', maxWidth: '600px', lineHeight: 1.8, fontWeight: 300, marginBottom: '1.5rem' }}>
+            <motion.p variants={fadeUp} className="about-lead">
               Nestled amidst the tranquil beauty of Kandy, Godamunne Villa is a peaceful escape where contemporary comfort meets the warmth of Sri Lankan hospitality. Surrounded by lush greenery and the timeless charm of the hills, our villa offers an intimate setting to relax, reconnect, and experience Kandy at your own pace.
             </motion.p>
-            <motion.p variants={fadeUp} style={{ fontSize: '1.1rem', color: 'var(--color-text-muted)', maxWidth: '550px', lineHeight: 1.8, marginBottom: '2.5rem' }}>
+            <motion.p variants={fadeUp} className="about-desc">
               Every detail has been thoughtfully designed to create a stay that feels effortless, elegant, and personal — from quiet mornings to unforgettable evenings.
             </motion.p>
-            <motion.div variants={fadeUp} style={{ paddingLeft: '1.5rem', borderLeft: '2px solid var(--color-accent)', margin: '3rem 0 2rem' }}>
-              <p style={{ fontStyle: 'italic', fontSize: '1.5rem', color: 'var(--color-text)', lineHeight: 1.4, fontFamily: 'var(--font-serif)' }}>
+            <motion.div variants={fadeUp} className="about-quote">
+              <p>
                 "Come for the beauty of Kandy.<br />Stay for the feeling of home."
               </p>
             </motion.div>
             
-            <motion.div 
-              variants={fadeUp} 
-              style={{ 
-                marginTop: '4rem', 
-                marginBottom: '4rem', 
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-                gap: '2rem',
-                maxWidth: '750px'
-              }}
-            >
-              <div style={{ padding: '2.5rem 2rem', backgroundColor: 'var(--color-surface)', border: '1px solid var(--color-border)', borderTop: '3px solid var(--color-accent)' }}>
-                <h3 style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', fontSize: '1.2rem', color: 'var(--color-accent)', marginBottom: '1.5rem', fontFamily: 'var(--font-serif)', letterSpacing: '2px', textTransform: 'uppercase' }}>
-                  <span style={{ fontSize: '1.4rem' }}>🌿</span> Vision
+            <motion.div variants={fadeUp} className="vision-mission-grid">
+              <div className="vision-mission-card">
+                <h3 className="vision-mission-title text-serif">
+                  <span>🌿</span> Vision
                 </h3>
-                <p style={{ fontSize: '1.05rem', color: 'var(--color-text-muted)', lineHeight: 1.8, fontWeight: 300 }}>
+                <p className="vision-mission-text">
                   To be Kandy’s most cherished villa retreat, where comfort, tranquility, and the beauty of nature create unforgettable memories.
                 </p>
               </div>
               
-              <div style={{ padding: '2.5rem 2rem', backgroundColor: 'var(--color-surface)', border: '1px solid var(--color-border)', borderTop: '3px solid var(--color-accent)' }}>
-                <h3 style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', fontSize: '1.2rem', color: 'var(--color-accent)', marginBottom: '1.5rem', fontFamily: 'var(--font-serif)', letterSpacing: '2px', textTransform: 'uppercase' }}>
-                  <span style={{ fontSize: '1.4rem' }}>✨</span> Mission
+              <div className="vision-mission-card">
+                <h3 className="vision-mission-title text-serif">
+                  <span>✨</span> Mission
                 </h3>
-                <p style={{ fontSize: '1.05rem', color: 'var(--color-text-muted)', lineHeight: 1.8, fontWeight: 300 }}>
+                <p className="vision-mission-text">
                   To provide exceptional hospitality, peaceful surroundings, and personalized care, making every guest feel at home and every stay truly special.
                 </p>
               </div>
@@ -382,13 +439,13 @@ function App() {
             viewport={{ once: true, margin: "-100px" }}
             variants={staggerContainer}
           >
-            <motion.h2 variants={fadeUp} className="text-serif text-accent" style={{ fontSize: '3.5rem', marginBottom: '2rem', lineHeight: 1.1 }}>
+            <motion.h2 variants={fadeUp} className="text-serif text-accent section-title">
               Experience Kandy.
             </motion.h2>
-            <motion.p variants={fadeUp} style={{ fontSize: '1.25rem', color: 'var(--color-text)', maxWidth: '600px', lineHeight: 1.8, fontWeight: 300, marginBottom: '1.5rem' }}>
+            <motion.p variants={fadeUp} className="about-lead">
               Discover the beauty of Kandy from the comfort of Godamunne Villa. Surrounded by tranquil greenery and the timeless charm of the hill country, our villa offers a peaceful setting to slow down, relax, and enjoy meaningful moments.
             </motion.p>
-            <motion.p variants={fadeUp} style={{ fontSize: '1.1rem', color: 'var(--color-text-muted)', maxWidth: '550px', lineHeight: 1.8, marginBottom: '3rem' }}>
+            <motion.p variants={fadeUp} className="about-desc">
               From quiet mornings to exploring the cultural heart of Kandy, every stay offers an opportunity to experience Sri Lanka at your own pace.
             </motion.p>
             <motion.div variants={fadeUp}>
@@ -420,10 +477,10 @@ function App() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 1 }}
-            style={{ marginBottom: '4rem', textAlign: 'center' }}
+            style={{ marginBottom: '3rem', textAlign: 'center' }}
           >
-            <h2 className="text-serif" style={{ fontSize: '3.5rem', marginBottom: '1rem' }}>Gallery</h2>
-            <p className="text-sans" style={{ color: 'var(--color-text-muted)', fontSize: '1.2rem' }}>Moments frozen in time.</p>
+            <h2 className="text-serif section-title">Gallery</h2>
+            <p className="text-sans" style={{ color: 'var(--color-text-muted)', fontSize: '1.1rem' }}>Moments frozen in time.</p>
           </motion.div>
           <div className="gallery-grid">
             {[img1, img2, img3, img4, img5, img6, img7, img8].map((imgSrc, index) => (
@@ -451,12 +508,14 @@ function App() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 1 }}
-            style={{ marginBottom: '3rem', textAlign: 'center' }}
+            style={{ marginBottom: '2.5rem', textAlign: 'center' }}
           >
-            <h2 className="text-serif" style={{ fontSize: '3.5rem', marginBottom: '1rem' }}>Location</h2>
-            <p className="text-sans" style={{ color: 'var(--color-text-muted)', fontSize: '1.2rem' }}>No.80/1 Ampitiya Road, Tennakumbura, Godamunne, Kandy, Sri Lanka</p>
+            <h2 className="text-serif section-title">Location</h2>
+            <p className="text-sans" style={{ color: 'var(--color-text-muted)', fontSize: '1rem', maxWidth: '600px', margin: '0 auto' }}>
+              No.80/1 Ampitiya Road, Tennakumbura, Godamunne, Kandy, Sri Lanka
+            </p>
           </motion.div>
-          <div style={{ width: '100%', height: '450px', overflow: 'hidden' }}>
+          <div className="location-map-wrapper">
             <iframe 
               src="https://maps.google.com/maps?q=Godamunne%20Villa%20Kandy,%20Sri%20Lanka&t=&z=14&ie=UTF8&iwloc=&output=embed" 
               width="100%" 
